@@ -1,0 +1,29 @@
+FROM swille/base
+MAINTAINER Selenium <selenium-developers@googlegroups.com>
+
+USER root
+
+#===============
+# APT-GET UPDATE
+#===============
+RUN	apt-get update -qqy
+
+#
+# NODEJS
+RUN	apt-get install -qqy nodejs &&\
+	apt-get install -qqy npm
+
+#
+# GET LATEST NODEJS
+RUN	npm i -g n &&\
+	n stable
+RUN ln -s `$(which nodejs)` /usr/bin/node
+
+#
+# npm -g installs
+RUN	npm i -g nightwatch \
+	gulp-cli
+
+
+ENV tags=test01
+WORKDIR /home/seluser
