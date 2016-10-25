@@ -7,4 +7,4 @@
 rm -f /tmp/.X*lock
 nohup Xvfb :99 -ac > /dev/null 2>&1 &
 echo ".... tags - " $tags
-cd /home/seluser && /bin/bash -c "nightwatch --config nightwatch.json -a $tags"
+cd /home/seluser && /bin/bash -c "nightwatch --config nightwatch.json -a $tags > exp.$tags.log"
