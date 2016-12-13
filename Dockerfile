@@ -15,11 +15,15 @@ RUN	apt-get install -qqy nodejs &&\
 
 #
 # GET LATEST NODEJS
-RUN	npm i -g n &&\
+RUN	npm install nightwatch --global n &&\
 	n stable
+
 #
 # NPM -g INSTALLS
-RUN	npm i -g nightwatch
+RUN	npm i -g gulp gulp-cli vinyl-fs
+RUN npm link gulp
+RUN npm link nightwatch
+
 
 RUN ln -s `$(which nodejs)` /usr/bin/node
 
@@ -66,20 +70,17 @@ RUN apt-get update -qqy \
     fluxbox \
   && rm -rf /var/lib/apt/lists/* /var/cache/apt/*
 
-
 #==============================
 # Scripts to run Selenium Node
 #==============================
 COPY entry_point.sh /opt/bin/entry_point.sh
 RUN chmod +x /opt/bin/entry_point.sh
 
-ENV tags=test01
+ENV gulptask=gulp
 ADD start.xvfb.sh /start.xvfb
 RUN chmod a+x start.xvfb
-#ENTRYPOINT ["/usr/bin/Xvfb :99 -ac > /dev/null 2>&1 &"]
-#CMD /start.xvfb
 
-#RUN Xvfb :99 -ac > /dev/null &
-#CMD "Xvfb :99 -ac > /dev/null"
+
+
 
 EXPOSE 5900
